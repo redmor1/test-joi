@@ -7,13 +7,14 @@ userRouter.get("/", (req, res) => {
   res.send("Hello world, user module");
 });
 
-userRouter.post("/", (req, res) => {
+userRouter.post("/", async (req, res) => {
   try {
-    const user = createUser(req.body);
-    res.send("User created");
+    const user = await createUser(req.body);
+    console.log("CONSOLE.LOG", req.body);
+    res.send("User created", user);
   } catch (error) {
     console.error(error);
-    throw new Error(error);
+    res.status(400).send(error);
   }
 });
 
